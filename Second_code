@@ -1,0 +1,38 @@
+#Importar Biblioteca de Requests
+import requests
+
+#cabeçalho 
+def main():
+    print('### Consulta CEP ###')
+    print()
+
+# Início
+
+#Peça ao usuário para digitar o CEP
+cep_input = input('Digite o CEP para consulta: ')
+while len(cep_input) != 8:
+    print('Quantidade de digitos inválida!')
+    cep_input = input('Digite novamente o CEP para a consulta')
+
+request = requests.get('https://viacep.com.br/ws/{}/json/'.format(cep_input))
+address_data = request.json()
+
+if'erro' not in address_data:
+    print('==> CEP ENCONTRADO <==')
+    print('CEP: {}'.format(address_data['cep']))
+    print('Rua/Avenida: {}'.format(address_data['logradouro']))
+    print('Complemento: {}'.format(address_data['complemento']))
+    print('Bairro: {}'.format(address_data['bairro']))
+    print('Cidade: {}'.format(address_data['localidade']))
+    print('Estado: {}'.format(address_data['uf']))
+
+option = int(input('Deseja realizar uma nova busca ?\n1. Sim\n2. Sair\n'))
+if option == 1:
+        main()
+
+else:
+        print('Finalizando o programa...')
+
+#nome do ambiente de nível superior do programa
+if __name__ == '__main__':
+    main()
